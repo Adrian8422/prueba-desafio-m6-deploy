@@ -19,6 +19,6 @@
     "dev": "nodemon --watch ./server/index.ts --exec ts-node ./server/dev.ts",
     "build:api": "tsc index.ts",
     "build": "yarn build:front && yarn build:api",
-    "start": "node ./dev.js"
+    "start": "node ./server/index.js"
   }
 }
