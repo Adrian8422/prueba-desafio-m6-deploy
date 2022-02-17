@@ -14,7 +14,7 @@
     "typescript": "^4.5.5"
   },
   "scripts": {
-    "dev:front": "parcerl serve ./client/index.html",
+    "dev:front": "parcel serve ./client/index.html",
     "build:front": "parcel build ./client/index.html",
     "dev": "nodemon --watch ./server/index.ts --exec ts-node ./server/dev.ts",
     "build:api": "tsc ./server/index.ts",

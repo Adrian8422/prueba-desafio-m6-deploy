@@ -40,14 +40,90 @@ app.post("/signup",(req,res)=>{
   })
 })
 
+app.post("/signin",(req,res)=>{
+  const {email}=req.body
+  userCollection.where("email","==",email).get().then((response)=>{
+    if(response.empty){
+      console.error("No estas registrado")
+    }else{
+      res.json({
+        id:response.docs[0].id
+      })
+    }
+  })
+})
+
+app.post("/rooms",(req,res)=>{
+  const {userId} =req.body
+
+  userCollection.doc(userId).get().then((doc)=>{
+    if(doc.exists){
+      const roomRef = rtdb.ref("rooms/"+nanoid())
+      roomRef.set({
+        owner: userId,
+        messages:[]=[]
+      }).then(()=>{
+        const longIdRoom = roomRef.key
+        const roomId = 1000 + Math.floor(Math.random()*999)
+       roomsCollection.doc(roomId.toString()).set({
+         rtdbRoomId:longIdRoom
+       }).then(()=>{
+         res.json({
+           id:roomId.toString()
+         })
+       })
+      })
+    }else{
+      res.status(400).json({
+        message:"room no existing"
+      })
+    }
+  })
+  
+  
+})
+
+app.get("/rooms/:roomId",(req,res)=>{
+  const {userId} = req.query
+  const {roomId} = req.params
+
+  userCollection.doc(userId.toString()).get().then((doc)=>{
+    if(doc.exists){
+      roomsCollection.doc(roomId).get().then((snap)=>{
+        if(snap.exists){
+          const data = snap.data()
+          res.json(data)
+        }
+      })
+    }else {
+      res.status(400).json({
+        message:"room no existing"
+      })
+    }
+  })
+})
+app.post("/messages/:roomId",(req,res)=>{
+  const {roomId} = req.params
+  const chatRoomsRed = rtdb.ref(`/rooms/${roomId}/messages`)
+  chatRoomsRed.push(req.body,()=>{
+    res.json({
+      message:"Todo bien"
+    })
+  })
+})
 app.get("/env",(req,res)=>{
   res.json({
     environment:process.env.NODE_ENV
   })
 })
 
+app.get("*",(req,res)=>{
+  res.sendFile(__dirname + "/dist/index.html")
+})
+
 
 app.listen(port,()=>{
   console.log(`service active http://localhost:${port}` )
+ 
   
 })
