@@ -1,5 +1,5 @@
 import { firestore,rtdb } from "./db";
-
+import * as path from "path"
 import { nanoid } from "nanoid";
 
 import * as express from "express"
@@ -118,7 +118,9 @@ app.get("/env",(req,res)=>{
 })
 
 app.get("*",(req,res)=>{
-  res.sendFile(__dirname + "/dist/index.html")
+  const pathResolve = path.resolve("","dist/index.html")
+  res.sendFile(pathResolve)
+
 })
 
 

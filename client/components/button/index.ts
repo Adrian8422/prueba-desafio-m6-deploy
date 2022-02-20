@@ -9,15 +9,15 @@ class ButtonComp extends HTMLElement{
     const style= document.createElement("style")
     style.innerHTML= `
     .button-elem{
-
-      font-family:"Odibee Sans", cursive;
+      border-radius: 18px;
+      font-family: 'Source Code Pro', monospace;
       background-color: #102626;
       height: 84px;
-      width: 364px;
-      font-size: 45px;
+      width: 360px;
+      font-size: 29px;
       border:solid 6px #00fff9;
       color: silver;
-      border-radius: 6px;
+      
     } 
     `
     this.appendChild(style)
