@@ -19,13 +19,13 @@ app.use(cors())
 
 
 app.post("/signup",(req,res)=>{
-  const {email} =req.body
+  
   const {nombre} =req.body
 
-  userCollection.where("email","==",email).get().then((response)=>{
+  userCollection.where("nombre","==",nombre).get().then((response)=>{
     if(response.empty){
       userCollection.add({
-        email,
+        
         nombre
       }).then((newUserRef)=>{
         res.json({
@@ -41,8 +41,8 @@ app.post("/signup",(req,res)=>{
 })
 
 app.post("/signin",(req,res)=>{
-  const {email}=req.body
-  userCollection.where("email","==",email).get().then((response)=>{
+  const {nombre}=req.body
+  userCollection.where("nombre","==",nombre).get().then((response)=>{
     if(response.empty){
       console.error("No estas registrado")
     }else{
@@ -60,13 +60,33 @@ app.post("/rooms",(req,res)=>{
     if(doc.exists){
       const roomRef = rtdb.ref("rooms/"+nanoid())
       roomRef.set({
-        owner: userId,
-        messages:[]=[]
+        currentGame:{
+          user1:{
+            name:"",
+            userId:"",
+            choice:"",
+            online:false,
+            start:false
+          },
+          user2:{
+            name:"",
+            userId:"",
+            choice:"",
+            online:false,
+            start:false
+
+          }
+        },
+        owner:userId
       }).then(()=>{
         const longIdRoom = roomRef.key
         const roomId = 1000 + Math.floor(Math.random()*999)
        roomsCollection.doc(roomId.toString()).set({
-         rtdbRoomId:longIdRoom
+         rtdbRoomId:longIdRoom,
+         history:{
+           user1:0,
+           user2:0
+         }
        }).then(()=>{
          res.json({
            id:roomId.toString()

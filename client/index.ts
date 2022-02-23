@@ -6,6 +6,7 @@ import "./pages/welcome-page2"
 import "./pages/nueva-sala"
 import "./pages/sala-existente"
 import "./pages/sign-up"
+import"./pages/sala-creada"
 import {state} from"./state"
 import "./router"
 

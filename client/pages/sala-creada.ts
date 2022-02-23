@@ -1,6 +1,6 @@
 import { Router } from "@vaadin/router"
 
-class WelcomePage extends HTMLElement {
+class SalaCreada extends HTMLElement {
   connectedCallback(){
     this.render()
     const style =document.createElement("style")
@@ -52,7 +52,7 @@ class WelcomePage extends HTMLElement {
     
     <div class="container-full-page">
         <div class="container-title"  
-            <h1 class="title-page">Bienvenidxs</h1>
+            <h1 class="title-page">eslasalacreadaadda</h1>
 
              <h2 class="subtitle"> Estas registradx?</h2>
        </div>
@@ -77,4 +77,4 @@ class WelcomePage extends HTMLElement {
     
   }
 }
-customElements.define("welcome-page",WelcomePage)
+customElements.define("sala-creada",SalaCreada)

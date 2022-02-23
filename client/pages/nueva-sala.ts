@@ -1,4 +1,5 @@
 /// HACER PAGES CON CUSTOM ELEMENTS PPORQUE VOY A UTILIZAR DE ROUTER VAADIN
+import { Router } from "@vaadin/router"
 import {state} from "../state"
 class NuevaSala extends HTMLElement{
   
@@ -17,7 +18,7 @@ class NuevaSala extends HTMLElement{
       
     }
    
-    .container-buttons{
+    .form{
     display: grid;
     margin: 0 auto;
     justify-content: center;
@@ -47,16 +48,32 @@ class NuevaSala extends HTMLElement{
   }
   addListeners(){
     const cs = state.getState()
-
-    const  form = this.querySelector(".container-buttons")
+    const form = this.querySelector(".form")
     form.addEventListener("submit",(e)=>{
-
       e.preventDefault()
-
       const target = e.target as any
-      state.pushNameUser1ToState(target.nombre.value)
+      const nombre= target.nombre.value
+
+      state.pushNameUser1ToState(nombre)
       state.setState(cs)
+      state.signIn((err)=>{
+        
+      // state.askNewRoom(()=>{
+      //   state.accessToRoom(state.data.roomId)
+      //   Router.go("sala-creada")
+
+      // })
+        
+      })
     })
+    
+    
+    // if(err){
+    //   console.error("hubo un error")
+    // }
+    // if(cs.registerMessage =="user already exists"){
+    //   Router.go("home")
+    // }
 
 
   }
@@ -72,7 +89,7 @@ class NuevaSala extends HTMLElement{
            Tijera</h1>
        </div>
 
-       <form class="container-buttons">
+       <form class="form">
 
           <input  class="input"type="text" name="nombre" placeholder=" Ingrese su nombre..."/>
           <button-comp>Empezar</button-comp>
